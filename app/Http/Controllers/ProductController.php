@@ -20,12 +20,17 @@ class ProductController extends Controller {
         $request->validate([
             'name' => 'required',
             'price' => 'required|numeric',
+            'image' => 'required|image|mimes:jpg,png'
         ]);
+
+        $image = $request->file('image');
+        $image->storeAs('public', $image->hashName());
 
         Product::create([
             'name' => $request->name,
             'price' => $request->price,
             'description' => $request->description,
+            'image' => $image->hashName()
         ]);
 
         return redirect()->route('products.index')->with('success', 'product is succes added');

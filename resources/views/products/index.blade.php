@@ -2,7 +2,9 @@
     <div class="py-12 px-4">
         <div class="flex justify-between">
             <h2>List Producst</h2>
-            <button class="bg-slate-200 px-5 py-2">Tambah</button>
+            <a href={{ route('products.create') }}>
+                <button class="bg-slate-200 px-5 py-2">Add</button>
+            </a>
         </div>
 
         <div class="grid grid-cols-3 gap-3">

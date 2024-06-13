@@ -9,7 +9,7 @@ use Illuminate\View\View;
 
 class ProductController extends Controller {
     public function index(): View {
-        $products = Product::paginate(10);
+        $products = Product::paginate(9);
         return view('products.index', compact('products'));
     }
 
@@ -55,5 +55,15 @@ class ProductController extends Controller {
         $product->update();
 
         return redirect()->route('products.index')->with('success', 'update product is success');
+    }
+
+
+    public function destroy(Product $product) {
+        if ($product->image !== 'noimage.png') {
+            Storage::disk('local')->delete('public/', $product->image);
+        }
+        $product->delete();
+
+        return redirect()->route('products.index')->with('success', "Delete product succes");
     }
 }

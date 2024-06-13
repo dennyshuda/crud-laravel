@@ -2,6 +2,8 @@
     <div class="py-12 px-4">
         <div class="flex justify-between">
             <p class="bg-slate-200 px-5 py-2">Edit Product</p>
+
+            @include('products.partials.delete-product')
         </div>
 
         <div class="flex" x-data={ imageUrl: 'storage/noimage.png' }>

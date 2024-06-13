@@ -17,10 +17,12 @@
                     <?php echo asset('storage/file.txt'); ?>
                     <img src="{{ url('storage/' . $product->image) }}" alt={{ $product->name }}>
                     <div>
-                        <p class="font-bold">{{ $product->name }}</p>
+                        <p class="font-bold">{{ $product->description }}</p>
                         <p class="text-slate-500">Rp. {{ number_format($product->price) }}</p>
                     </div>
-                    <button class="bg-slate-200 w-full">Edit</button>
+                    <a href={{ route('products.edit', $product) }}>
+                        <button class="bg-slate-200 w-full">Edit</button>
+                    </a>
                 </div>
             @endforeach
         </div>

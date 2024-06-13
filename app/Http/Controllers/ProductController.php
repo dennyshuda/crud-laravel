@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProductController extends Controller {
@@ -34,5 +35,25 @@ class ProductController extends Controller {
         ]);
 
         return redirect()->route('products.index')->with('success', 'product is succes added');
+    }
+
+    public function edit(Product $product): View {
+        return view('products.edit', compact('product'));
+    }
+
+    public function update(Request $request, Product $product) {
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->description = $request->description;
+
+        if ($request->file('image')) {
+            Storage::disk('local')->delete('public/', $product->image);
+            $image = $request->file('image');
+            $image->storeAs('public', $image->hashName());
+            $product->image = $image->hashName();
+        }
+        $product->update();
+
+        return redirect()->route('products.index')->with('success', 'update product is success');
     }
 }

@@ -17,11 +17,13 @@
                                 class="aspect-square object-cover" />
                             <x-card.title>{{ $product->name }}</x-card.title>
                             <x-card.description>{{ $product->description }}</x-card.description>
-                            @if ($product->user_id == auth()->user()->id)
-                                <a href={{ route('products.edit', $product) }}>
-                                    <button class="bg-slate-800 w-full text-white py-2 rounded-md">Edit</button>
-                                </a>
-                            @endif
+                            @auth
+                                @if ($product->user_id == auth()->user()->id)
+                                    <a href={{ route('products.edit', $product) }}>
+                                        <button class="bg-slate-800 w-full text-white py-2 rounded-md">Edit</button>
+                                    </a>
+                                @endif
+                            @endauth
                         </x-card.header>
                     </x-card>
                 @endforeach

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -29,6 +30,7 @@ class ProductController extends Controller {
     }
 
     public function edit(Product $product): View {
+        Gate::authorize('edit', $product);
         return view('products.edit', compact('product'));
     }
 

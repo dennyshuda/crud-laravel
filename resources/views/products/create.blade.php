@@ -1,4 +1,6 @@
 <x-app-layout>
+    @slot('title', 'Create Product')
+
     <div class="py-12 px-4">
         <div class="flex justify-between">
             <p class="bg-slate-200 px-5 py-2">Add Product</p>
@@ -10,7 +12,8 @@
             </div>
 
 
-            <form action={{ route('products.store') }} method="POST" class="flex-1" enctype="multipart/form-data">
+            <form action={{ route('products.store') }} method="POST" class="flex-1 space-y-2" novalidate
+                enctype="multipart/form-data">
                 @csrf
                 <div>
                     <x-input-label for="image" :value="__('Image')" />
@@ -38,8 +41,8 @@
                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </div>
 
-                <x-primary-button class="ms-3">
-                    {{ __('Submit') }}
+                <x-primary-button>
+                    {{ __('Create') }}
                 </x-primary-button>
             </form>
         </div>

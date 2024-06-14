@@ -1,34 +1,31 @@
 <x-app-layout>
-    <div class="py-12 px-4">
-        @if (session()->has('success'))
-            <x-alert />
-        @endif
+    @slot('title', 'Products')
 
-        <div class="flex justify-between">
-            <h2>List Producst</h2>
-            <a href={{ route('products.create') }}>
-                <button class="bg-slate-200 px-5 py-2">Add</button>
-            </a>
-        </div>
+    <div class="py-5 px-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div class="grid grid-cols-3 gap-3">
-            @foreach ($products as $product)
-                <div>
-                    <?php echo asset('storage/file.txt'); ?>
-                    <img src="{{ url('storage/' . $product->image) }}" alt={{ $product->name }}>
-                    <div>
-                        <p class="font-bold">{{ $product->description }}</p>
-                        <p class="text-slate-500">Rp. {{ number_format($product->price) }}</p>
-                    </div>
-                    <a href={{ route('products.edit', $product) }}>
-                        <button class="bg-slate-200 w-full">Edit</button>
-                    </a>
-                </div>
-            @endforeach
-        </div>
+            @if (session()->has('success'))
+                <x-alert />
+            @endif
+            <h2 class="font-bold text-2xl uppercase">List Products</h2>
 
-        <div>
-            {{ $products->links() }}
+            <div class="grid grid-cols-3 gap-3">
+                @foreach ($products as $product)
+                    <x-card>
+                        <x-card.header>
+                            <img src="{{ url('storage/image/products/' . $product->image) }}" alt={{ $product->name }}
+                                class="aspect-square object-cover" />
+                            <x-card.title>{{ $product->name }}</x-card.title>
+                            <x-card.description>{{ $product->description }}</x-card.description>
+                            @if ($product->user_id == auth()->user()->id)
+                                <a href={{ route('products.edit', $product) }}>
+                                    <button class="bg-slate-800 w-full text-white py-2 rounded-md">Edit</button>
+                                </a>
+                            @endif
+                        </x-card.header>
+                    </x-card>
+                @endforeach
+            </div>
         </div>
     </div>
 </x-app-layout>
